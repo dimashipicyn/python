@@ -104,17 +104,36 @@ _________
 
 MAX_WRONG = len(HANGMAN) - 1
 
-secret = ('python', 'hello', 'dima')
+WORDS = ('python', 'hello', 'dima') # кортеж слов
+secret = random.choice(WORDS) # рандомное слово
+used = [] # буквы которые уже были предложены
+user_word = "-" * len(secret)
 
-i = 0
-while i <= MAX_WRONG:
+fail = 0
+while fail <= MAX_WRONG:
 	result = input('Введите букву: ')
-	if not result in secret:
-		print('нет такой буквы')
-		print(HANGMAN[i])
-		i += 1
+	while result in used:
+		print("Вы уже предлагали букву: ", result)
+		result = input('\nВведите букву: ')
+	used.append(result)
+	print("Использованные буквы: ", used)
+	if result in secret:
+		print('вы отгадали, буква ', result, 'есть в слове!')
+		new = ""
+		for i in range(len(secret)):
+			if result == secret[i]:
+				new += result
+			else:
+				new += user_word[i]
+		user_word = new
 	else:
-		print('вы отгадали')
+		print('Ошибка, такой буквы нет!\n', HANGMAN[fail])
+		fail += 1
 	if result == '0':
+		print("GAME OVER")
+		break
+	print("Отгаданное слово: ", user_word)
+	if user_word == secret:
+		print("Вы победили!")
 		break
 print('игра окончена')
