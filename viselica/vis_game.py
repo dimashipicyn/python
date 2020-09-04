@@ -110,7 +110,7 @@ used = [] # буквы которые уже были предложены
 user_word = "-" * len(secret)
 
 fail = 0
-while fail <= MAX_WRONG:
+while fail <= MAX_WRONG and user_word != secret:
 	result = input('Введите букву: ')
 	while result in used:
 		print("Вы уже предлагали букву: ", result)
@@ -130,10 +130,10 @@ while fail <= MAX_WRONG:
 		print('Ошибка, такой буквы нет!\n', HANGMAN[fail])
 		fail += 1
 	if result == '0':
-		print("GAME OVER")
 		break
-	print("Отгаданное слово: ", user_word)
-	if user_word == secret:
-		print("Вы победили!")
-		break
-print('игра окончена')
+	print("\nОтгаданное слово: ", user_word)
+if user_word == secret:
+	print("\n\nВы выиграли!")
+else:
+	print("Вы проиграли")
+print('Игра окончена')
