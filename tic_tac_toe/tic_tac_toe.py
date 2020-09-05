@@ -97,9 +97,23 @@ def human_move(board, human):
 
 def computer_move(board, computer, human):
 	board = board[:]
+	BEST_MOVES = (4, 0, 2, 6, 8, 1, 3, 5, 7)
 	legal = legal_moves(board)
-	move = random.choice(legal)
-	return move
+	for move in legal:
+		board[move] = computer
+		if computer == winner(board):
+			return move
+		else:
+			board[move] = EMPTY
+	for move in legal:
+		board[move] = human
+		if human == winner(board):
+			return move
+		else:
+			board[move] = EMPTY
+	for move in BEST_MOVES:
+		if move in legal:
+			return move
 
 def next_turn(turn):
 	if turn == X:
